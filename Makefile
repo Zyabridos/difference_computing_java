@@ -1,4 +1,7 @@
-.PHONY: build run install clean
+.PHONY: build run install clean run-dist
+
+run-dist:
+	./build/install/diff_compution_java/bin/diff_compution_java -h
 
 build:
 	./gradlew build
