@@ -18,3 +18,6 @@ run:
 
 clean:
 	./gradlew clean
+
+check:
+	gradle check

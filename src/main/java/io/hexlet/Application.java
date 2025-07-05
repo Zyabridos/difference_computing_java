@@ -7,8 +7,6 @@ import picocli.CommandLine.Parameters;
 
 import java.util.Map;
 
-import io.hexlet.Parser;
-
 @Command(
         name = "gendiff",
         mixinStandardHelpOptions = true,
@@ -45,7 +43,8 @@ public class Application implements Runnable {
                 if (!data2.containsKey(key)) {
                     System.out.println("Key '" + key + "' removed");
                 } else if (!data1.get(key).equals(data2.get(key))) {
-                    System.out.println("Key '" + key + "' changed from '" + data1.get(key) + "' to '" + data2.get(key) + "'");
+                    System.out.println("Key '" + key + "' changed from '"
+                            + data1.get(key) + "' to '" + data2.get(key) + "'");
                 }
             });
 
