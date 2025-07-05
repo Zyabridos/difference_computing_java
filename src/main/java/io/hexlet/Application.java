@@ -5,6 +5,10 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+import java.util.Map;
+
+import io.hexlet.Parser;
+
 @Command(
         name = "gendiff",
         mixinStandardHelpOptions = true,
@@ -27,14 +31,32 @@ public class Application implements Runnable {
 
     @Override
     public void run() {
-        // evnt Differ.generate
-        System.out.println("Comparing:");
-        System.out.println("  File 1: " + filePath1);
-        System.out.println("  File 2: " + filePath2);
-        System.out.println("  Format: " + format);
+        try {
+            Map<String, Object> data1 = Parser.parse(filePath1);
+            Map<String, Object> data2 = Parser.parse(filePath2);
 
-        // String result = Differ.generate(filePath1, filePath2, format);
-        // System.out.println(result);
+            System.out.println("Comparing:");
+            System.out.println("  File 1: " + filePath1);
+            System.out.println("  File 2: " + filePath2);
+            System.out.println("  Format: " + format);
+            System.out.println("------------");
+
+            data1.keySet().forEach(key -> {
+                if (!data2.containsKey(key)) {
+                    System.out.println("Key '" + key + "' removed");
+                } else if (!data1.get(key).equals(data2.get(key))) {
+                    System.out.println("Key '" + key + "' changed from '" + data1.get(key) + "' to '" + data2.get(key) + "'");
+                }
+            });
+
+            data2.keySet().stream()
+                    .filter(key -> !data1.containsKey(key))
+                    .forEach(key -> System.out.println("Key '" + key + "' added with value '" + data2.get(key) + "'"));
+
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
+        }
     }
 
     public static void main(String[] args) {

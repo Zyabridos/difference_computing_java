@@ -1,5 +1,8 @@
 .PHONY: build run install clean run-dist
 
+z: install
+	./build/install/diff_compution_java/bin/diff_compution_java -h
+
 run-dist: install
 	./build/install/diff_compution_java/bin/diff_compution_java -h
 
@@ -9,8 +12,9 @@ build:
 install:
 	./gradlew installDist
 
-run: install
-	./build/install/diff_compution_java/bin/diff_compution_java
+run:
+	./gradlew installDist
+	./build/install/diff_compution_java/bin/diff_compution_java $(file1) $(file2)
 
 clean:
 	./gradlew clean
